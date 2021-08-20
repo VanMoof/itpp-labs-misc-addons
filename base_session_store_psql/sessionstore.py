@@ -58,6 +58,8 @@ class PostgresSessionStore(SessionStore):
               data bytea,
               create_date timestamp without time zone
             );
+            CREATE INDEX IF NOT EXISTS
+            sessionstore_id_index ON sessionstore(id);
             """
         )
         cr.commit()
