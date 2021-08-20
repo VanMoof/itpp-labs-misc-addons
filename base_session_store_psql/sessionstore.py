@@ -55,7 +55,8 @@ class PostgresSessionStore(SessionStore):
             """
             CREATE TABLE IF NOT EXISTS sessionstore (
               id varchar(40),
-              data bytea
+              data bytea,
+              create_date timestamp without time zone
             );
             """
         )
@@ -87,8 +88,8 @@ class PostgresSessionStore(SessionStore):
             else:
                 cr.execute(
                     """
-                    INSERT INTO sessionstore (id, data)
-                    VALUES (%(id)s, %(data)s);
+                    INSERT INTO sessionstore (id, data, create_date)
+                    VALUES (%(id)s, %(data)s, now() at time zone 'UTC');
                     """,
                     sql_data,
                 )
